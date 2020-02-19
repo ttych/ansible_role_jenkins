@@ -1,0 +1,5 @@
+---
+
+- name: install jenkins packages
+  include: install.yml packages="{{ jenkins_packages }}" services="{{ jenkins_services }}"
+

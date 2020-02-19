@@ -1,0 +1,28 @@
+---
+- name: include distribution specific variables
+  include_vars:
+    dir: vars
+    files_matching: "{{ item }}"
+  loop:
+    - "{{ ansible_system }}.yml"
+    - "{{ ansible_os_family }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_distribution_release }}.yml"
+
+- name: include runit specifics
+  include_vars:
+    dir: vars
+    files_matching: "{{ item }}"
+  loop:
+    - services.yml
+    - runit.yml
+  when: (has_runit|d(false))
+
+- name: include daemontools specifics
+  include_vars:
+    dir: vars
+    files_matching: "{{ item }}"
+  loop:
+    - services.yml
+    - daemontools.yml
+  when: (has_daemontools|d(false)) and not (has_runit|d(false))

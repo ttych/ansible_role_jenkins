@@ -1,2 +1,11 @@
 ---
-# tasks file for ansible_role_jenkins
+- block:
+    - include_tasks: context.yml
+
+    - include_tasks: setup.yml
+
+  when: want_jenkins
+
+- name: "set has_jenkins to {{ want_jenkins }}"
+  set_fact:
+    has_jenkins: "{{ want_jenkins }}"
