@@ -30,9 +30,12 @@
   when: has_runit|d(false)
 
 
-# FIXME
-# - name: setup standard service
-#   when: not (has_runit|d(false))
+- name: setup standard service
+  block:
+    - fail:
+        msg: "not implemented: setup standard service outside runit"
+
+  when: not (has_runit|d(false))
 
 
 - name: start standard service
