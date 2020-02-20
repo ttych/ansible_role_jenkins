@@ -1,0 +1,16 @@
+---
+
+jenkins_home: "{{ services_dir }}/jenkins"
+jenkins_app: "{{ jenkins_home }}/jenkins"
+jenkins_releases": "{{ jenkins_home }}/releases"
+jenkins_webroot: "{{ jenkins_app }}/war"
+jenkins_log_dir: "{{ jenkins_home }}/log"
+jenkins_log_file: "{{ jenkins_log_dir }}/jenkins.log"
+jenkins_run_dir: "{{ jenkins_home }}/run"
+jenkins_pid_file: "{{ jenkins_run_dir }}/jenkins.pid"
+
+jenkins_directories:
+  - { path: "{{ jenkins_home }}", owner: root, group: "{{ root_group }}", mode: "0755" }
+  - { path: "{{ jenkins_app }}", owner: "{{ jenkins_user}}", group: "{{ jenkins_group }}", mode: "0755" }
+  - { path: "{{ jenkins_releases }}", owner: root, group: "{{ jenkins_group }}", mode: "0755" }
+  - { path: "{{ jenkins_log_dir }}", owner: root, group: "{{ jenkins_group }}", mode: "0755" }

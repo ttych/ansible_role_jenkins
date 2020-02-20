@@ -1,0 +1,24 @@
+---
+
+- name: create groups
+  group:
+    name: "{{ item.name }}"
+    state: present
+    gid: "{{ item.gid | default(omit) }}"
+    system: "{{ item.system | default('no') }}"
+  loop: "{{ accounts_groups }}"
+
+- name: create users
+  user:
+    name: "{{ item.name }}"
+    uid: "{{ item.uid }}"
+    comment: "{{ item.comment }}"
+    create_home: "{{ item.create_home | default(omit) }}"
+    home: "{{ item.home | default(omit) }}"
+    force: yes
+    group: "{{ item.group }}"
+    groups: "{{ item.groups }}"
+    shell: "{{ item.shell | default('/usr/sbin/nologin') }}"
+    password: "{{ item.password|default(omit) }}"
+    state: present
+  loop: "{{ accounts_users }}"

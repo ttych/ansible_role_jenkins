@@ -1,9 +1,53 @@
 ---
 want_jenkins: false
 
+
+root_group: root
+
+jenkins_use_distribution_packages: false
+
+jenkins_prereq_packages: []
+
 jenkins_packages:
   - jenkins
-
 jenkins_services:
   - jenkins
+jenkins_distribution_war: /usr/share/jenkins/jenkins.war
 
+jenkins_port: 8180
+jenkins_home: /home/jenkins
+jenkins_app: "{{ jenkins_home }}/jenkins"
+jenkins_releases: "{{ jenkins_home }}/releases"
+jenkins_webroot: "{{ jenkins_app }}/war"
+jenkins_log_dir: /var/log
+jenkins_log_file: /var/log/jenkins.log
+jenkins_run_dir: /var/run/jenkins
+jenkins_pid_file: /var/run/jenkins/jenkins.pid
+jenkins_prefix: /jenkins
+jenkins_java_home: /usr/openjdk8
+jenkins_user: jenkins
+jenkins_group: jenkins
+
+jenkins_directories:
+  - { path: "{{ jenkins_home }}", owner: "{{ jenkins_user }}", group: "{{ jenkins_group }}", mode: "0755" }
+  - { path: "{{ jenkins_app }}", owner: "{{ jenkins_user }}", group: "{{ jenkins_group }}", mode: "0750" }
+  - { path: "{{ jenkins_releases }}", owner: "{{ jenkins_user}}", group: "{{ jenkins_group }}", mode: "0755" }
+  - { path: "{{ jenkins_webroot }}", owner: "{{ jenkins_user }}", group: "{{ jenkins_group }}", mode: "0755" }
+  - { path: "{{ jenkins_run_dir }}", owner: "{{ jenkins_user }}", group: "{{ jenkins_group }}", mode: "0755" }
+
+jenkins_release_url: http://updates.jenkins-ci.org/download/war/
+jenkins_release_version: 2.221
+
+jenkins_users:
+  - name: jenkins
+    comment: Jenkins CI
+    group: jenkins
+    groups:
+    home: "{{ jenkins_home }}"
+    create_home: no
+    shell: /bin/sh
+    uid: 3201
+    password: '*'
+
+jenkins_groups:
+  - { name: jenkins, gid: 3201 }

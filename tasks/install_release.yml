@@ -1,0 +1,12 @@
+---
+- name: set war path
+  set_fact:
+    jenkins_war: "{{ jenkins_releases }}/jenkins.{{ jenkins_release_version }}.war"
+
+- name: get jenkins release
+  get_url:
+    url: "{{ jenkins_release_url }}/{{ jenkins_release_version }}/jenkins.war"
+    dest: "{{ jenkins_war }}"
+    mode: '0644'
+    owner: root
+    group: "{{ root_group }}"

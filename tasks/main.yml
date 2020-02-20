@@ -1,8 +1,20 @@
 ---
 - block:
-    - include_tasks: context.yml
+    - include: context.yml
 
-    - include_tasks: setup.yml
+    - include: accounts.yml accounts_groups="{{ jenkins_groups }}" accounts_users="{{ jenkins_users }}"
+
+    - include: install_packages.yml packages="{{ jenkins_prereq_packages }}" services=[]
+
+    - include: install_packages.yml packages="{{ jenkins_packages }}" services="{{ jenkins_services }}"
+      when: jenkins_use_distribution_packages
+
+    - include: setup_workspace.yml
+
+    - include: install_release.yml
+      when: not jenkins_use_distribution_packages
+
+    - include_tasks: setup_service.yml
 
   when: want_jenkins
 

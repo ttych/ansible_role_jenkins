@@ -1,0 +1,18 @@
+---
+
+root_group: wheel
+
+jenkins_prereq_packages:
+  - openjdk8
+
+jenkins_java_home: /usr/local/openjdk8
+jenkins_distribution_war_path: /usr/local/share/jenkins/jenkins.war
+
+jenkins_services_sysrcs:
+  - { key: jenkins_enable, value: "YES" }
+  - { key: jenkins_home, value: "{{ jenkins_home }}" }
+  - { key: jenkins_args, value: "--webroot={{ jenkins_webroot }} --httpPort={{ jenkins_port }} --prefix={{ jenkins_prefix }}" }
+  - { key: jenkins_java_home, value: "{{ jenkins_java_home }}" }
+  - { key: jenkins_user, value: "{{ jenkins_user }}" }
+  - { key: jenkins_group, value: "{{ jenkins_group }}" }
+  - { key: jenkins_log_file, value: "{{ jenkins_log_file }}" }
