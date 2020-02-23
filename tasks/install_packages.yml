@@ -28,8 +28,3 @@
   when:
     - ansible_system == 'FreeBSD'
     - install|d() and install.changed
-
-
-- name: set war path
-  set_fact:
-    jenkins_war: "{{ jenkins_distribution_war }}"

@@ -9,18 +9,18 @@
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_distribution_release }}.yml"
 
-- name: include runit specifics
+- name: include services variables
   include_vars:
     dir: vars
     files_matching: "{{ item }}"
   loop:
     - services.yml
-  when: (has_services|d(false))
+  when: has_services|d(false)
 
-- name: include daemontools specifics
+- name: include runit variables
   include_vars:
     dir: vars
     files_matching: "{{ item }}"
   loop:
     - runit.yml
-  when: (has_runit|d(false))
+  when: has_runit|d(false)

@@ -6,7 +6,11 @@
 
     - include: install_packages.yml packages="{{ jenkins_prereq_packages }}" services=[]
 
-    - include: install_packages.yml packages="{{ jenkins_packages }}" services="{{ jenkins_services }}"
+    - block:
+        - include: install_packages.yml packages="{{ jenkins_packages }}" services="{{ jenkins_services }}"
+        - name: set war path
+          set_fact:
+            jenkins_war: "{{ jenkins_distribution_war }}"
       when: jenkins_use_distribution_packages
 
     - include: setup_workspace.yml
