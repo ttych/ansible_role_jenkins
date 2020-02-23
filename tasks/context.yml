@@ -12,15 +12,11 @@
 - name: include services variables
   include_vars:
     dir: vars
-    files_matching: "{{ item }}"
-  loop:
-    - services.yml
+    files_matching: "services.yml"
   when: has_services|d(false)
 
 - name: include runit variables
   include_vars:
     dir: vars
-    files_matching: "{{ item }}"
-  loop:
-    - runit.yml
+    files_matching: "runit.yml"
   when: has_runit|d(false)
