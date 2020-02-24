@@ -1,0 +1,15 @@
+#!/bin/sh
+
+export PATH={{ jenkins_java_home }}/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin
+
+echo $$ > "$jenkins_pid_file"
+
+exec 2>&1
+exec setuidgid {{ jenkins_user }} \
+     {{ jenkins_java_home }}/bin/java \
+     -Xmx2048m -Djava.awt.headless=true \
+     -DJENKINS_HOME="{{ jenkins_app }}" \
+     -jar "{{ jenkins_war }}" \
+     --webroot="{{ jenkins_webroot }}" \
+     --httpPort={{ jenkins_port }} \
+     --prefix={{ jenkins_prefix }}

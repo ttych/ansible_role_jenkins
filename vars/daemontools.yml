@@ -1,0 +1,9 @@
+---
+
+jenkins_daemontools_dir: "{{ jenkins_home }}/svscan"
+jenkins_daemontools_log_dir: "{{ jenkins_daemontools_dir }}/log"
+
+jenkins_daemontools_directories:
+  - { path: "{{ jenkins_daemontools_dir }}", owner: root, group: "{{ root_group }}", mode: "0755" }
+  - { path: "{{ jenkins_daemontools_log_dir }}", owner: root, group: "{{ root_group }}", mode: "0755" }
+  - { path: "{{ jenkins_daemontools_log_dir }}/main", owner: "{{ daemontools_logger_user }}", group: "{{ root_group }}", mode: "0755" }

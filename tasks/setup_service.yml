@@ -1,5 +1,35 @@
 ---
 
+- name: setup daemontools for jenkins
+  block:
+    - name: create service directory tree
+      file:
+        path: "{{ item.path }}"
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+        mode: "{{ item.mode }}"
+        state: directory
+      loop: "{{ jenkins_daemontools_directories }}"
+
+    - template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: "{{ root_group }}"
+        mode: "{{ item.mode }}"
+      loop:
+        - { src: svscan/run, dest: "{{ jenkins_daemontools_dir }}/run", mode: "0755" }
+        - { src: svscan/log/run, dest: "{{ jenkins_daemontools_log_dir }}/run", mode: "0755" }
+
+    - name: link daemontools
+      file:
+        src: "{{ jenkins_daemontools_dir }}"
+        dest: "{{ daemontools_services_dir }}/jenkins"
+        state: link
+
+  when: (has_daemontools|d(false)) and not (has_runit|d(false))
+
+
 - name: setup runit for jenkins
   block:
     - name: create service directory tree
@@ -27,7 +57,7 @@
         dest: "{{ runit_services_dir }}/jenkins"
         state: link
 
-  when: has_runit|d(false)
+  when: (has_runit|d(false)) and not (has_daemontools|d(false))
 
 
 - name: setup standard service
@@ -35,7 +65,7 @@
     - fail:
         msg: "not implemented: setup standard service outside runit"
 
-  when: not (has_runit|d(false))
+  when: not (has_runit|d(false) or has_daemontools|d(false))
 
 
 - name: start standard service
@@ -64,4 +94,4 @@
       loop: "{{ jenkins_services }}"
       when: t_jenkins_conf.changed and not t_jenkins_service.changed
 
-  when: not (has_runit|d(false))
+  when: not (has_runit|d(false) or has_daemontools|d(false))

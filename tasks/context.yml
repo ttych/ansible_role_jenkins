@@ -15,8 +15,14 @@
     files_matching: "services.yml"
   when: has_services|d(false)
 
+- name: include daemontools variables
+  include_vars:
+    dir: vars
+    files_matching: "daemontools.yml"
+  when: has_daemontools|d(false)
+
 - name: include runit variables
   include_vars:
     dir: vars
     files_matching: "runit.yml"
-  when: has_runit|d(false)
+  when: (has_runit|d(false)) and not (has_daemontools|d(false))
