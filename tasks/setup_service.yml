@@ -24,7 +24,7 @@
     - name: link daemontools
       file:
         src: "{{ jenkins_daemontools_dir }}"
-        dest: "{{ daemontools_services_dir }}/jenkins"
+        dest: "{{ daemontools_svscan_dir }}/jenkins"
         state: link
 
   when: (has_daemontools|d(false)) and not (has_runit|d(false))

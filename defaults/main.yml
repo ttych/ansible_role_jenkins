@@ -35,7 +35,7 @@ jenkins_directories:
   - { path: "{{ jenkins_webroot }}", owner: "{{ jenkins_user }}", group: "{{ jenkins_group }}", mode: "0755" }
   - { path: "{{ jenkins_run_dir }}", owner: "{{ jenkins_user }}", group: "{{ jenkins_group }}", mode: "0755" }
 
-jenkins_release_url: http://updates.jenkins-ci.org/download/war/
+jenkins_release_url: http://updates.jenkins-ci.org/download/war
 jenkins_release_version: 2.221
 
 jenkins_users:
